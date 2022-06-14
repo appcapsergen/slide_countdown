@@ -2,12 +2,12 @@ import 'package:flutter/widgets.dart';
 
 class Separator extends StatelessWidget {
   const Separator({
-    Key? key,
     required this.show,
     required this.separator,
     required this.style,
     this.padding,
-  }) : super(key: key);
+    super.key,
+  });
 
   final bool show;
   final String separator;

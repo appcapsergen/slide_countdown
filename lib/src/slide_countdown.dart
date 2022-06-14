@@ -6,7 +6,7 @@ import 'utils/countdown_mixin.dart';
 import 'utils/duration_title.dart';
 import 'utils/enum.dart';
 import 'utils/extensions.dart';
-import 'utils/notifiy_duration.dart';
+import 'utils/notify_duration.dart';
 
 class SlideCountdown extends StatefulWidget {
   const SlideCountdown({
@@ -144,7 +144,7 @@ class SlideCountdown extends StatefulWidget {
 
 class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
   late StreamDuration _streamDuration;
-  late NotifiyDuration _notifiyDuration;
+  late NotifyDuration _notifiyDuration;
   late Color _textColor;
   late Color _fadeColor;
   bool disposed = false;
@@ -152,7 +152,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
   @override
   void initState() {
     super.initState();
-    _notifiyDuration = NotifiyDuration(widget.duration);
+    _notifiyDuration = NotifyDuration(widget.duration);
     disposed = false;
     _streamDurationListener();
 

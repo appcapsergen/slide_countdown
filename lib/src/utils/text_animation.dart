@@ -5,7 +5,6 @@ import 'enum.dart';
 
 class TextAnimation extends StatefulWidget {
   TextAnimation({
-    Key? key,
     required this.value,
     required this.textStyle,
     required this.slideDirection,
@@ -14,9 +13,9 @@ class TextAnimation extends StatefulWidget {
     this.curve = Curves.easeOut,
     this.countUp = true,
     this.digitsNumber,
-  })  : assert(!(digitsNumber != null && digitsNumber.length == 9),
-            'overwriting the digits of a number must complete a number from 0-9'),
-        super(key: key);
+    super.key,
+  }) : assert(!(digitsNumber != null && digitsNumber.length == 9),
+            'overwriting the digits of a number must complete a number from 0-9');
 
   final ValueNotifier<int> value;
   final TextStyle textStyle;
@@ -31,8 +30,7 @@ class TextAnimation extends StatefulWidget {
   _TextAnimationState createState() => _TextAnimationState();
 }
 
-class _TextAnimationState extends State<TextAnimation>
-    with SingleTickerProviderStateMixin {
+class _TextAnimationState extends State<TextAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _offsetAnimationOne;
   late Animation<Offset> _offsetAnimationTwo;
@@ -44,13 +42,11 @@ class _TextAnimationState extends State<TextAnimation>
   void initState() {
     super.initState();
     disposed = false;
-    _animationController = AnimationController(
-        vsync: this, duration: widget.slideAnimationDuration);
+    _animationController = AnimationController(vsync: this, duration: widget.slideAnimationDuration);
     _offsetAnimationOne = Tween<Offset>(
       begin: const Offset(0.0, -1.0),
       end: const Offset(0.0, 0.0),
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: widget.curve));
+    ).animate(CurvedAnimation(parent: _animationController, curve: widget.curve));
 
     _offsetAnimationTwo = Tween<Offset>(
       begin: const Offset(0.0, 0.0),
@@ -114,10 +110,8 @@ class _TextAnimationState extends State<TextAnimation>
       animation: _animationController,
       builder: (context, _) {
         _digit(widget.value.value);
-        final nextValueOffset =
-            isUp ? -_offsetAnimationOne.value : _offsetAnimationOne.value;
-        final currentValueOffset =
-            isUp ? -_offsetAnimationTwo.value : _offsetAnimationTwo.value;
+        final nextValueOffset = isUp ? -_offsetAnimationOne.value : _offsetAnimationOne.value;
+        final currentValueOffset = isUp ? -_offsetAnimationTwo.value : _offsetAnimationTwo.value;
 
         return Stack(
           alignment: Alignment.center,
@@ -158,6 +152,5 @@ class _TextAnimationState extends State<TextAnimation>
     );
   }
 
-  String digit(int value) =>
-      widget.digitsNumber != null ? widget.digitsNumber![value] : '$value';
+  String digit(int value) => widget.digitsNumber != null ? widget.digitsNumber![value] : '$value';
 }

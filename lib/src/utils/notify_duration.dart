@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-class NotifiyDuration extends ValueNotifier<Duration> {
-  NotifiyDuration(Duration value) : super(value);
+class NotifyDuration extends ValueNotifier<Duration> {
+  NotifyDuration(Duration value) : super(value);
 
   streamDuration(Duration duration) {
     value = duration;

@@ -2,50 +2,31 @@ part of 'separated.dart';
 
 class DigitSeparatedItem extends BaseDigitsSeparated {
   const DigitSeparatedItem({
-    Key? key,
-    required double height,
-    required double width,
-    required Decoration decoration,
-    required ValueNotifier<int> firstDigit,
-    required ValueNotifier<int> secondDigit,
-    required TextStyle textStyle,
-    required TextStyle separatorStyle,
-    required int initValue,
-    required SlideDirection slideDirection,
-    required bool showZeroValue,
-    required Curve curve,
-    required bool countUp,
-    required Duration slideAnimationDuration,
-    required List<Color> gradientColor,
-    required String separator,
-    required bool fade,
-    bool? showSeparator,
-    EdgeInsets? separatorPadding,
-    TextDirection? textDirection,
-    List<String>? digitsNumber,
-  }) : super(
-          key: key,
-          height: height,
-          width: width,
-          decoration: decoration,
-          firstDigit: firstDigit,
-          secondDigit: secondDigit,
-          textStyle: textStyle,
-          separatorStyle: separatorStyle,
-          initValue: initValue,
-          slideDirection: slideDirection,
-          showZeroValue: showZeroValue,
-          curve: curve,
-          countUp: countUp,
-          slideAnimationDuration: slideAnimationDuration,
-          gradientColor: gradientColor,
-          fade: fade,
-          separatorPadding: separatorPadding,
-          separator: separator,
-          showSeparator: showSeparator ?? true,
-          textDirection: textDirection,
-          digitsNumber: digitsNumber,
-        );
+    required super.height,
+    required super.width,
+    required super.decoration,
+    required super.firstDigit,
+    required super.secondDigit,
+    required super.textStyle,
+    required super.separatorStyle,
+    required super.digitTitleStyle,
+    required super.initValue,
+    required super.slideDirection,
+    required super.showZeroValue,
+    required super.curve,
+    required super.countUp,
+    required super.slideAnimationDuration,
+    required super.gradientColor,
+    required super.separator,
+    required super.fade,
+    super.showSeparator = true,
+    super.digitTitle,
+    super.separatorPadding,
+    super.digitTitlePadding,
+    super.textDirection,
+    super.digitsNumber,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +65,16 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
 
     final separatorWidget = Separator(
       padding: separatorPadding,
-      show: true,
+      show: showSeparator,
       separator: separator,
       style: separatorStyle,
+    );
+
+    final digitTitleWidget = Separator(
+      padding: digitTitlePadding,
+      show: digitTitle != null,
+      separator: digitTitle ?? '',
+      style: digitTitleStyle,
     );
 
     final box = BoxSeparated(
@@ -95,31 +83,30 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       decoration: decoration,
       gradientColors: gradientColor,
       fade: fade,
-      child: Row(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          firstDigitWidget,
-          secondDigitWidget,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              firstDigitWidget,
+              secondDigitWidget,
+            ],
+          ),
+          if (digitTitle != null) digitTitleWidget
         ],
       ),
     );
 
-    return Visibility(
-      visible: showSeparator,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: textDirection.isRtl
-            ? [
-                separatorWidget,
-                box,
-              ]
-            : [
-                box,
-                separatorWidget,
-              ],
-      ),
-      replacement: box,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (showSeparator && textDirection.isRtl) separatorWidget,
+        box,
+        if (showSeparator && !textDirection.isRtl) separatorWidget,
+      ],
     );
   }
 }

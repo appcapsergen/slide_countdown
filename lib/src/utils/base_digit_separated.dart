@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'enum.dart';
 
 abstract class BaseDigitsSeparated extends StatelessWidget {
   const BaseDigitsSeparated({
-    Key? key,
     required this.height,
     required this.width,
     required this.decoration,
@@ -11,6 +11,7 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
     required this.secondDigit,
     required this.textStyle,
     required this.separatorStyle,
+    required this.digitTitleStyle,
     required this.initValue,
     required this.slideDirection,
     required this.showZeroValue,
@@ -19,12 +20,15 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
     required this.slideAnimationDuration,
     required this.gradientColor,
     required this.separator,
-    required this.showSeparator,
     required this.fade,
+    required this.showSeparator,
+    this.digitTitle,
     this.separatorPadding,
+    this.digitTitlePadding,
     this.textDirection,
     this.digitsNumber,
-  }) : super(key: key);
+    super.key,
+  });
 
   final double height;
   final double width;
@@ -33,6 +37,7 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
   final ValueNotifier<int> secondDigit;
   final TextStyle textStyle;
   final TextStyle separatorStyle;
+  final TextStyle digitTitleStyle;
   final int initValue;
   final SlideDirection slideDirection;
   final bool showZeroValue;
@@ -41,9 +46,11 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
   final Duration slideAnimationDuration;
   final List<Color> gradientColor;
   final String separator;
-  final bool showSeparator;
   final bool fade;
+  final bool showSeparator;
+  final String? digitTitle;
   final EdgeInsets? separatorPadding;
+  final EdgeInsets? digitTitlePadding;
   final TextDirection? textDirection;
   final List<String>? digitsNumber;
 }

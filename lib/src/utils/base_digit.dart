@@ -4,7 +4,6 @@ import 'enum.dart';
 
 abstract class BaseDigits extends StatelessWidget {
   const BaseDigits({
-    Key? key,
     required this.firstDigit,
     required this.secondDigit,
     required this.textStyle,
@@ -19,7 +18,8 @@ abstract class BaseDigits extends StatelessWidget {
     this.separatorPadding,
     this.textDirection,
     this.digitsNumber,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ValueNotifier<int> firstDigit;
   final ValueNotifier<int> secondDigit;

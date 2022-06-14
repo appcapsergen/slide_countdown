@@ -6,7 +6,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,10 @@ const defaultDuration = Duration(days: 2, hours: 2, minutes: 30);
 const defaultPadding = EdgeInsets.symmetric(horizontal: 10, vertical: 5);
 
 class ExampleSlideCountdown extends StatelessWidget {
-  const ExampleSlideCountdown({Key? key}) : super(key: key);
+  const ExampleSlideCountdown({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

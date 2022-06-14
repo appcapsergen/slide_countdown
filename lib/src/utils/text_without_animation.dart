@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class TextWithoutAnimation extends StatefulWidget {
   const TextWithoutAnimation({
-    Key? key,
     required this.value,
     required this.textStyle,
     this.digitsNumber,
-  }) : super(key: key);
+    super.key,
+  });
 
   final ValueNotifier<int> value;
   final TextStyle textStyle;
@@ -30,6 +30,5 @@ class _TextWithoutAnimationState extends State<TextWithoutAnimation> {
     );
   }
 
-  String digit(int value) =>
-      widget.digitsNumber != null ? widget.digitsNumber![value] : '$value';
+  String digit(int value) => widget.digitsNumber != null ? widget.digitsNumber![value] : '$value';
 }

@@ -1,3 +1,10 @@
-enum SlideDirection { up, down, none }
+enum SlideDirection {
+  up,
+  down,
+  none,
+}
 
-enum SeparatorType { symbol, title }
+enum SeparatorType {
+  symbol,
+  title,
+}
