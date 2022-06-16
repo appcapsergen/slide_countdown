@@ -1,3 +1,9 @@
+# 0.3.0
+* Added option to show digit title underneath the separated digit
+* Added option to hide separator
+* Upgraded package versions
+* Code refactor and clean-up
+
 # 0.2.8
 * Fix: [minutes separator](https://github.com/farhanfadila1717/slide_countdown/pull/15) `SlideCountdown` 
 

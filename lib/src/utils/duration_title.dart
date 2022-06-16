@@ -86,6 +86,7 @@ class DurationTitle {
         minutes: 'ր',
         seconds: 'վ',
       );
+
   factory DurationTitle.ru() => const DurationTitle(
         days: 'дней',
         hours: 'часов',

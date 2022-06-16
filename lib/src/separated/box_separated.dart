@@ -2,14 +2,14 @@ part of 'separated.dart';
 
 class BoxSeparated extends StatelessWidget {
   const BoxSeparated({
-    Key? key,
     required this.height,
     required this.width,
     required this.child,
     required this.decoration,
     required this.gradientColors,
     required this.fade,
-  }) : super(key: key);
+    super.key,
+  });
 
   final double height;
   final double width;

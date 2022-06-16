@@ -1,5 +1,6 @@
+## Original pub.dev package (link)
 ## [![cover][]][pubdev]
-[![flutter][]][web flutter] [![badge paypal][]][paypal account] [![badge linktree][]][linktree account] <br>
+[![flutter][]][web flutter] <br>
 A Flutter package to create easy slide animation countdown / countup timer.
 
 ---
@@ -57,11 +58,7 @@ SlideCountdown(
 
 ### 🚧 Maintener 
 [![account avatar][]][github account] <br>
-**Farhan Fadila** <br>
-📫 How to reach me: farhan.fadila1717@gmail.com
-
-### ❤️ Suport Maintener
-[![badge paypal][]][paypal account] [![badge linktree][]][linktree account]
+**Sergen Peker** <br>
 
 
 [cover]:https://github.com/farhanfadila1717/flutter_package/blob/master/display/slide_coutdown/slide_countdown.png
@@ -72,9 +69,5 @@ SlideCountdown(
 [pubdev]: https://pub.dev/packages/slide_countdown
 [flutter]: https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter
 [web flutter]: https://flutter.dev
-[account avatar]: https://avatars.githubusercontent.com/u/43161050?s=80
-[github account]: https://github.com/farhanfadila1717
-[badge linktree]: https://img.shields.io/badge/Donate-farhanfadila-orange
-[linktree account]: https://linktr.ee/farhanfadila
-[badge paypal]: https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal
-[paypal account]: https://www.paypal.me/farhanfadila1717
+[account avatar]: https://avatars.githubusercontent.com/u/94898347?v=4
+[github account]: https://github.com/appcapsergen
