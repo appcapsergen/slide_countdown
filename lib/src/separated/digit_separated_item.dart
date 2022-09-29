@@ -16,7 +16,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
     required super.curve,
     required super.countUp,
     required super.slideAnimationDuration,
-    required super.gradientColor,
     required super.separator,
     required super.fade,
     super.showSeparator = true,
@@ -81,7 +80,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       height: height,
       width: width,
       decoration: decoration,
-      gradientColors: gradientColor,
       fade: fade,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -90,10 +88,12 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              firstDigitWidget,
-              secondDigitWidget,
-            ],
+            children: textDirection.isRtl
+                ? [secondDigitWidget, firstDigitWidget]
+                : [
+                    firstDigitWidget,
+                    secondDigitWidget,
+                  ],
           ),
           if (digitTitle != null) digitTitleWidget
         ],

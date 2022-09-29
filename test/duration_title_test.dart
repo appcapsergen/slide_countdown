@@ -27,6 +27,18 @@ void main() {
           expect('seconds', durationTitle.seconds);
         },
       );
+
+      test(
+        'locale ar Test',
+        () {
+          final durationTitle = DurationTitle.ar();
+
+          expect('أيام', durationTitle.days);
+          expect('ساعات', durationTitle.hours);
+          expect('دقائق', durationTitle.minutes);
+          expect('ثواني', durationTitle.seconds);
+        },
+      );
     },
   );
 
@@ -98,6 +110,30 @@ void main() {
       },
     );
   });
+
+  test(
+    'locale el Test',
+    () {
+      final durationTitle = DurationTitle.el();
+
+      expect('μέρες', durationTitle.days);
+      expect('ώρες', durationTitle.hours);
+      expect('λεπτά', durationTitle.minutes);
+      expect('δευτερόλεπτα', durationTitle.seconds);
+    },
+  );
+
+  test(
+    'locale el short Test',
+    () {
+      final durationTitle = DurationTitle.elShort();
+
+      expect('μ', durationTitle.days);
+      expect('ώ', durationTitle.hours);
+      expect('λ', durationTitle.minutes);
+      expect('δ', durationTitle.seconds);
+    },
+  );
 
   test('Copywith Test', () {
     final en = DurationTitle.en();

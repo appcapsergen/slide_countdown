@@ -53,6 +53,23 @@ SlideCountdown(
 [![slidecountdown separatortype][]][slidecountdown separatortype]
 
 
+## Example control duration
+If you want to control duration more advanced, you can override property `StreamDuration`. <br>
+You can `play`, `pause`, `change`, `add`, `subtract` duration.
+
+> If you override/custom `StreamDuration` duration property has no effect anymore. <br>
+> See Full example control duration [here](https://github.com/farhanfadila1717/slide_countdown/blob/master/example/example.dart#L111).
+
+```dart
+final streamDuration = StreamDuration(const Duration(hours: 2));
+
+SlideCountdown(
+  // This duration no effect if you customize stream duration
+  duration: const Duration(seconds: 10),
+  streamDuration: streamDuration,
+),
+```
+
 
 ---
 

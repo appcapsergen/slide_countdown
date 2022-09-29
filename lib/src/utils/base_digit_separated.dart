@@ -18,7 +18,6 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
     required this.curve,
     required this.countUp,
     required this.slideAnimationDuration,
-    required this.gradientColor,
     required this.separator,
     required this.fade,
     required this.showSeparator,
@@ -44,7 +43,6 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
   final Curve curve;
   final bool countUp;
   final Duration slideAnimationDuration;
-  final List<Color> gradientColor;
   final String separator;
   final bool fade;
   final bool showSeparator;

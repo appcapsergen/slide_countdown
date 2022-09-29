@@ -6,146 +6,150 @@ const kDuration = Duration(hours: 3);
 const kFullDuration = Duration(days: 2);
 
 void main() {
-  group('SlideCountDown Test', () {
-    testWidgets(
-      'Hide Zero Value is True',
-      (tester) async {
-        final widget = SlideCountdown(
-          duration: kDuration,
-          showZeroValue: false,
-          separatorType: SeparatorType.title,
-        );
+  group(
+    'SlideCountDown Test',
+    () {
+      testWidgets(
+        'Custom Separator symbol',
+        (tester) async {
+          final widget = SlideCountdown(
+            duration: kDuration,
+            separatorType: SeparatorType.symbol,
+            separator: '|',
+            shouldShowDays: (_) => false,
+          );
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Center(child: widget),
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(child: widget),
+              ),
             ),
-          ),
-        );
+          );
 
-        await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-        final days = find.text('days');
+          final separator = find.text('|');
 
-        expect(days, findsNothing);
+          expect(separator, findsNWidgets(2));
+        },
+      );
 
-        final hours = find.text('hours');
+      testWidgets(
+        'Custom Separator Duration title',
+        (tester) async {
+          final widget = SlideCountdown(
+            duration: kFullDuration,
+            separatorType: SeparatorType.title,
+            durationTitle: DurationTitle.ru(),
+          );
 
-        expect(hours, findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'Hide Zero Value is False',
-      (tester) async {
-        final widget = SlideCountdown(
-          duration: kDuration,
-          showZeroValue: true,
-          separatorType: SeparatorType.title,
-        );
-
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Center(child: widget),
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(child: widget),
+              ),
             ),
-          ),
-        );
+          );
 
-        await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-        final days = find.text('days');
+          final days = find.text(DurationTitle.ru().days);
+          final hours = find.text(DurationTitle.ru().hours);
+          final minutes = find.text(DurationTitle.ru().minutes);
+          final seconds = find.text(DurationTitle.ru().seconds);
 
-        expect(days, findsOneWidget);
-      },
-    );
+          expect(days, findsOneWidget);
+          expect(hours, findsOneWidget);
+          expect(minutes, findsOneWidget);
+          expect(seconds, findsOneWidget);
+        },
+      );
 
-    testWidgets(
-      'Custom Separator symbol',
-      (tester) async {
-        final widget = SlideCountdown(
-          duration: kDuration,
-          separatorType: SeparatorType.symbol,
-          separator: '|',
-        );
+      testWidgets(
+        'TextDirection is rtl',
+        (tester) async {
+          final widget = SlideCountdown(
+            duration: kFullDuration,
+            separatorType: SeparatorType.title,
+            textDirection: TextDirection.rtl,
+          );
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Center(child: widget),
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(child: widget),
+              ),
             ),
-          ),
-        );
+          );
 
-        await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
 
-        final separator = find.text('|');
+          final days = find.text('days');
+          final hours = find.text('hours');
+          final minutes = find.text('minutes');
+          final seconds = find.text('seconds');
 
-        expect(separator, findsNWidgets(2));
-      },
-    );
+          expect(days, findsOneWidget);
+          expect(hours, findsOneWidget);
+          expect(minutes, findsOneWidget);
+          expect(seconds, findsOneWidget);
+        },
+      );
 
-    testWidgets(
-      'Custom Separator Duration title',
-      (tester) async {
-        final widget = SlideCountdown(
-          duration: kFullDuration,
-          separatorType: SeparatorType.title,
-          durationTitle: DurationTitle.ru(),
-        );
-
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Center(child: widget),
+      testWidgets(
+        'When duration is Zero, show replacement widget',
+        (tester) async {
+          const widget = SlideCountdown(
+            duration: const Duration(seconds: 2),
+            replacement: Text(
+              'replacement',
             ),
-          ),
-        );
+          );
 
-        await tester.pumpAndSettle();
-
-        final days = find.text(DurationTitle.ru().days);
-        final hours = find.text(DurationTitle.ru().hours);
-        final minutes = find.text(DurationTitle.ru().minutes);
-        final seconds = find.text(DurationTitle.ru().seconds);
-
-        expect(days, findsOneWidget);
-        expect(hours, findsOneWidget);
-        expect(minutes, findsOneWidget);
-        expect(seconds, findsOneWidget);
-      },
-    );
-
-    testWidgets(
-      'TextDirection is rtl',
-      (tester) async {
-        final widget = SlideCountdown(
-          duration: kFullDuration,
-          separatorType: SeparatorType.title,
-          textDirection: TextDirection.rtl,
-        );
-
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Scaffold(
-              body: Center(child: widget),
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(child: widget),
+              ),
             ),
-          ),
-        );
+          );
 
-        await tester.pumpAndSettle();
+          final replacementWidget = find.text('replacement');
 
-        final days = find.text('days');
-        final hours = find.text('hours');
-        final minutes = find.text('minutes');
-        final seconds = find.text('seconds');
+          expect(replacementWidget, findsNothing);
 
-        expect(days, findsOneWidget);
-        expect(hours, findsOneWidget);
-        expect(minutes, findsOneWidget);
-        expect(seconds, findsOneWidget);
-      },
-    );
-  });
+          await tester.pump(Duration(seconds: 3));
+
+          expect(replacementWidget, findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'ShouldShowItems only show days digit',
+        (tester) async {
+          final widget = SlideCountdown(
+            duration: kFullDuration,
+            separator: ':',
+            shouldShowDays: (_) => true,
+            shouldShowHours: (_) => false,
+            shouldShowMinutes: (_) => false,
+            shouldShowSeconds: (_) => false,
+          );
+
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Scaffold(
+                body: Center(child: widget),
+              ),
+            ),
+          );
+
+          final separator = find.text(':');
+
+          expect(separator, findsNothing);
+        },
+      );
+    },
+  );
 }

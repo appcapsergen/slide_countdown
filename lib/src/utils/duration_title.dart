@@ -42,9 +42,6 @@ class DurationTitle {
     return false;
   }
 
-  @override
-  int get hashCode => Object.hash(days, hours, minutes, seconds);
-
   factory DurationTitle.id() => const DurationTitle(
         days: 'hari',
         hours: 'jam',
@@ -57,6 +54,20 @@ class DurationTitle {
         hours: 'j',
         minutes: 'm',
         seconds: 'd',
+      );
+
+  factory DurationTitle.el() => const DurationTitle(
+        days: 'μέρες',
+        hours: 'ώρες',
+        minutes: 'λεπτά',
+        seconds: 'δευτερόλεπτα',
+      );
+
+  factory DurationTitle.elShort() => const DurationTitle(
+        days: 'μ',
+        hours: 'ώ',
+        minutes: 'λ',
+        seconds: 'δ',
       );
 
   factory DurationTitle.en() => const DurationTitle(
@@ -100,4 +111,21 @@ class DurationTitle {
         minutes: 'м',
         seconds: 'с',
       );
+
+  factory DurationTitle.ar() => const DurationTitle(
+        days: 'أيام',
+        hours: 'ساعات',
+        minutes: 'دقائق',
+        seconds: 'ثواني',
+      );
+
+  factory DurationTitle.arShort() => const DurationTitle(
+        days: 'ي',
+        hours: 'س',
+        minutes: 'د',
+        seconds: 'ث',
+      );
+
+  @override
+  int get hashCode => <String>[days, hours, minutes, seconds].join().hashCode;
 }
