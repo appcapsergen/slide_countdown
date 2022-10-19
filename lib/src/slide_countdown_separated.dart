@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/src/utils/utils.dart';
 import 'package:stream_duration/stream_duration.dart';
@@ -53,6 +55,7 @@ class SlideCountdownSeparated extends StatefulWidget {
     this.slideAnimationDuration = const Duration(milliseconds: 300),
     this.textDirection,
     this.digitsNumber,
+    this.filter,
     this.streamDuration,
     this.onChanged,
     this.shouldShowDays,
@@ -177,6 +180,9 @@ class SlideCountdownSeparated extends StatefulWidget {
   /// Override digits number
   /// Default 0-9
   final List<String>? digitsNumber;
+
+  /// ImageFilter for optional backdrop filter
+  final ImageFilter? filter;
 
   /// If you override [StreamDuration] package for stream a duration
   /// property [duration], [countUp], [infinityCountUp], and [onDone] in [SlideCountdownSeparated] not affected
@@ -344,6 +350,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       separator: widget.separatorType == SeparatorType.title ? durationTitle.days : separator,
       textDirection: widget.textDirection,
       digitsNumber: widget.digitsNumber,
+      filter: widget.filter,
     );
 
     final hours = DigitSeparatedItem(
@@ -370,6 +377,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       separator: widget.separatorType == SeparatorType.title ? durationTitle.hours : separator,
       textDirection: widget.textDirection,
       digitsNumber: widget.digitsNumber,
+      filter: widget.filter,
     );
 
     final minutes = DigitSeparatedItem(
@@ -396,6 +404,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       separator: widget.separatorType == SeparatorType.title ? durationTitle.minutes : separator,
       textDirection: widget.textDirection,
       digitsNumber: widget.digitsNumber,
+      filter: widget.filter,
     );
 
     final seconds = DigitSeparatedItem(
@@ -422,6 +431,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       separator: widget.separatorType == SeparatorType.title ? durationTitle.seconds : separator,
       textDirection: widget.textDirection,
       digitsNumber: widget.digitsNumber,
+      filter: widget.filter,
     );
 
     return ValueListenableBuilder(

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/src/utils/extensions.dart';
 import 'package:stream_duration/stream_duration.dart';
@@ -43,6 +45,7 @@ class SlideCountdown extends StatefulWidget {
     this.slideAnimationDuration = const Duration(milliseconds: 300),
     this.textDirection,
     this.digitsNumber,
+    this.filter,
     this.streamDuration,
     this.onChanged,
     this.shouldShowDays,
@@ -154,6 +157,9 @@ class SlideCountdown extends StatefulWidget {
   /// Override digits number
   /// Default 0-9
   final List<String>? digitsNumber;
+
+  /// ImageFilter for optional backdrop filter
+  final ImageFilter? filter;
 
   /// If you override [StreamDuration] package for stream a duration
   /// property [duration], [countUp], [infinityCountUp], and [onDone] in [SlideCountdown] not affected
@@ -335,6 +341,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           digitTitlePadding: widget.digitTitlePadding,
           separator: widget.separatorType == SeparatorType.title ? durationTitle.days : separator,
           digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final hours = DigitItem(
@@ -355,6 +362,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           digitTitlePadding: widget.digitTitlePadding,
           separator: widget.separatorType == SeparatorType.title ? durationTitle.hours : separator,
           digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final minutes = DigitItem(
@@ -375,6 +383,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           digitTitlePadding: widget.digitTitlePadding,
           separator: widget.separatorType == SeparatorType.title ? durationTitle.minutes : separator,
           digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final seconds = DigitItem(
@@ -395,6 +404,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           digitTitlePadding: widget.digitTitlePadding,
           separator: widget.separatorType == SeparatorType.title ? durationTitle.seconds : separator,
           digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final daysWidget = showDays ? days : const SizedBox.shrink();
