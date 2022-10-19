@@ -30,9 +30,9 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
 
   @override
   Widget build(BuildContext context) {
-    final withOutAnimation = slideDirection == SlideDirection.none;
+    final withoutAnimation = slideDirection == SlideDirection.none;
 
-    final firstDigitWidget = withOutAnimation
+    final firstDigitWidget = withoutAnimation
         ? TextWithoutAnimation(
             value: firstDigit,
             textStyle: textStyle,
@@ -48,7 +48,7 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
             digitsNumber: digitsNumber,
           );
 
-    final secondDigitWidget = withOutAnimation
+    final secondDigitWidget = withoutAnimation
         ? TextWithoutAnimation(
             value: secondDigit,
             textStyle: textStyle,
