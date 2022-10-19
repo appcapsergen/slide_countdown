@@ -6,6 +6,7 @@ class DigitItem extends BaseDigits {
     required super.secondDigit,
     required super.textStyle,
     required super.separatorStyle,
+    required super.digitTitleStyle,
     required super.slideDirection,
     required super.curve,
     required super.countUp,
@@ -13,9 +14,12 @@ class DigitItem extends BaseDigits {
     required super.separator,
     required super.fade,
     super.showSeparator = true,
+    super.digitTitle,
     super.separatorPadding,
+    super.digitTitlePadding,
     super.textDirection,
     super.digitsNumber,
+    super.filter,
     super.key,
   });
 
@@ -63,21 +67,44 @@ class DigitItem extends BaseDigits {
       style: separatorStyle,
     );
 
+    final digitTitleWidget = Separator(
+      padding: digitTitlePadding,
+      show: digitTitle != null,
+      separator: digitTitle ?? '',
+      style: digitTitleStyle,
+    );
+
     List<Widget> children = textDirection.isRtl
         ? [
-            separatorWidget,
+            if (showSeparator) separatorWidget,
             secondDigitWidget,
             firstDigitWidget,
           ]
         : [
             firstDigitWidget,
             secondDigitWidget,
-            separatorWidget,
+            if (showSeparator) separatorWidget,
           ];
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: children,
+    return _wrapBackdropFilter(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: children,
+          ),
+          if (digitTitle != null) digitTitleWidget
+        ],
+      ),
     );
   }
+
+  Widget _wrapBackdropFilter({required Widget child}) => filter != null
+      ? BackdropFilter(
+          filter: filter!,
+          child: child,
+        )
+      : child;
 }

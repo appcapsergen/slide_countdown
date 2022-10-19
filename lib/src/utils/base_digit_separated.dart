@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'enum.dart';
@@ -26,6 +28,7 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
     this.digitTitlePadding,
     this.textDirection,
     this.digitsNumber,
+    this.filter,
     super.key,
   });
 
@@ -51,4 +54,5 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
   final EdgeInsets? digitTitlePadding;
   final TextDirection? textDirection;
   final List<String>? digitsNumber;
+  final ImageFilter? filter;
 }

@@ -24,6 +24,7 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
     super.digitTitlePadding,
     super.textDirection,
     super.digitsNumber,
+    super.filter,
     super.key,
   });
 
@@ -81,22 +82,24 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       width: width,
       decoration: decoration,
       fade: fade,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: textDirection.isRtl
-                ? [secondDigitWidget, firstDigitWidget]
-                : [
-                    firstDigitWidget,
-                    secondDigitWidget,
-                  ],
-          ),
-          if (digitTitle != null) digitTitleWidget
-        ],
+      child: _wrapBackdropFilter(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: textDirection.isRtl
+                  ? [secondDigitWidget, firstDigitWidget]
+                  : [
+                      firstDigitWidget,
+                      secondDigitWidget,
+                    ],
+            ),
+            if (digitTitle != null) digitTitleWidget
+          ],
+        ),
       ),
     );
 
@@ -109,4 +112,11 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       ],
     );
   }
+
+  Widget _wrapBackdropFilter({required Widget child}) => filter != null
+      ? BackdropFilter(
+          filter: filter!,
+          child: child,
+        )
+      : child;
 }
