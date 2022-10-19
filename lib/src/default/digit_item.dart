@@ -26,6 +26,7 @@ class DigitItem extends BaseDigits {
   @override
   Widget build(BuildContext context) {
     final withOutAnimation = slideDirection == SlideDirection.none;
+
     final firstDigitWidget = withOutAnimation
         ? TextWithoutAnimation(
             value: firstDigit,
@@ -74,28 +75,34 @@ class DigitItem extends BaseDigits {
       style: digitTitleStyle,
     );
 
-    List<Widget> children = textDirection.isRtl
-        ? [
-            if (showSeparator) separatorWidget,
-            secondDigitWidget,
-            firstDigitWidget,
-          ]
-        : [
-            firstDigitWidget,
-            secondDigitWidget,
-            if (showSeparator) separatorWidget,
-          ];
+    final box = Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: textDirection.isRtl
+              ? [
+                  secondDigitWidget,
+                  firstDigitWidget,
+                ]
+              : [
+                  firstDigitWidget,
+                  secondDigitWidget,
+                ],
+        ),
+        if (digitTitle != null) digitTitleWidget,
+      ],
+    );
 
     return _wrapBackdropFilter(
-      child: Column(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: children,
-          ),
-          if (digitTitle != null) digitTitleWidget
+          if (textDirection.isRtl && showSeparator) separatorWidget,
+          box,
+          if (!textDirection.isRtl && showSeparator) separatorWidget,
         ],
       ),
     );

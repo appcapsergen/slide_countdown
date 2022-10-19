@@ -31,6 +31,7 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
   @override
   Widget build(BuildContext context) {
     final withOutAnimation = slideDirection == SlideDirection.none;
+
     final firstDigitWidget = withOutAnimation
         ? TextWithoutAnimation(
             value: firstDigit,
@@ -91,7 +92,10 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: textDirection.isRtl
-                  ? [secondDigitWidget, firstDigitWidget]
+                  ? [
+                      secondDigitWidget,
+                      firstDigitWidget,
+                    ]
                   : [
                       firstDigitWidget,
                       secondDigitWidget,
@@ -106,9 +110,9 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (showSeparator && textDirection.isRtl) separatorWidget,
+        if (textDirection.isRtl && showSeparator) separatorWidget,
         box,
-        if (showSeparator && !textDirection.isRtl) separatorWidget,
+        if (!textDirection.isRtl && showSeparator) separatorWidget,
       ],
     );
   }
