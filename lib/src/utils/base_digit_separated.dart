@@ -22,6 +22,7 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
     required this.slideAnimationDuration,
     required this.separator,
     required this.fade,
+    required this.hideFirstDigitZero,
     required this.showSeparator,
     this.digitTitle,
     this.separatorPadding,
@@ -47,8 +48,7 @@ abstract class BaseDigitsSeparated extends StatelessWidget {
   final bool countUp;
   final Duration slideAnimationDuration;
   final String separator;
-  final bool fade;
-  final bool showSeparator;
+  final bool fade, hideFirstDigitZero, showSeparator;
   final String? digitTitle;
   final EdgeInsets? separatorPadding;
   final EdgeInsets? digitTitlePadding;

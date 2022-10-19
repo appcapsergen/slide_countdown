@@ -34,6 +34,7 @@ class SlideCountdown extends StatefulWidget {
     @Deprecated("no longer used, use `shouldShowDays` instead") this.withDays = true,
     this.showZeroValue = false,
     @Deprecated("no longer used") this.fade = false,
+    this.hideFirstDigitZero = false,
     this.showDigitTitles = false,
     this.decoration = const BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -127,6 +128,9 @@ class SlideCountdown extends StatefulWidget {
 
   /// if you want [slideDirection] animation that is not rough set this value to true
   final bool fade;
+
+  /// if you want to hide the first digit when it's 0 (zero) set this value to true
+  final bool hideFirstDigitZero;
 
   /// if you want the digit titles to be visible under the digits set this value to true
   final bool showDigitTitles;
@@ -335,6 +339,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
           fade: widget.fade,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: (showHours || showMinutes || showSeconds) || (isSeparatorTitle && showDays),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
           separatorPadding: widget.separatorPadding,
@@ -356,6 +361,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
           fade: widget.fade,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: (showMinutes || showSeconds) || (isSeparatorTitle && showHours),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
           separatorPadding: widget.separatorPadding,
@@ -377,6 +383,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
           fade: widget.fade,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
           separatorPadding: widget.separatorPadding,
@@ -398,6 +405,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
           fade: widget.fade,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: isSeparatorTitle && showSeconds,
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
           separatorPadding: widget.separatorPadding,

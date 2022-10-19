@@ -13,6 +13,7 @@ class DigitItem extends BaseDigits {
     required super.slideAnimationDuration,
     required super.separator,
     required super.fade,
+    required super.hideFirstDigitZero,
     super.showSeparator = true,
     super.digitTitle,
     super.separatorPadding,
@@ -32,6 +33,7 @@ class DigitItem extends BaseDigits {
             value: firstDigit,
             textStyle: textStyle,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
           )
         : TextAnimation(
             slideAnimationDuration: slideAnimationDuration,
@@ -42,6 +44,7 @@ class DigitItem extends BaseDigits {
             countUp: countUp,
             fade: fade,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
           );
 
     final secondDigitWidget = withoutAnimation
@@ -49,6 +52,8 @@ class DigitItem extends BaseDigits {
             value: secondDigit,
             textStyle: textStyle,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
+            isLastDigit: true,
           )
         : TextAnimation(
             slideAnimationDuration: slideAnimationDuration,
@@ -59,6 +64,8 @@ class DigitItem extends BaseDigits {
             countUp: countUp,
             fade: fade,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
+            isLastDigit: true,
           );
 
     final separatorWidget = Separator(

@@ -43,6 +43,7 @@ class SlideCountdownSeparated extends StatefulWidget {
     @Deprecated("no longer used, use `ShouldShowItems`") this.withDays = true,
     this.showZeroValue = false,
     @Deprecated("no longer used") this.fade = false,
+    this.hideFirstDigitZero = false,
     this.showSeparator = true,
     this.showDigitTitles = false,
     this.decoration = const BoxDecoration(
@@ -147,6 +148,9 @@ class SlideCountdownSeparated extends StatefulWidget {
 
   /// if you want [slideDirection] animation that is not rough set this value to true
   final bool fade;
+
+  /// if you want to hide the first digit when it's 0 (zero) set this value to true
+  final bool hideFirstDigitZero;
 
   /// if you want the [separator] to be visible set this value to true
   final bool showSeparator;
@@ -342,6 +346,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
       fade: widget.fade,
+      hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: (showHours || showMinutes || showSeconds) || (isSeparatorTitle && showDays),
       digitTitle: widget.showDigitTitles ? durationTitle.days : null,
@@ -369,6 +374,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
       fade: widget.fade,
+      hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: showMinutes || showSeconds || (isSeparatorTitle && showHours),
       digitTitle: widget.showDigitTitles ? durationTitle.hours : null,
@@ -396,6 +402,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
       fade: widget.fade,
+      hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
       digitTitle: widget.showDigitTitles ? durationTitle.minutes : null,
@@ -423,6 +430,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
       fade: widget.fade,
+      hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator && widget.separatorType == SeparatorType.title,
       // showSeparator: isSeparatorTitle && showSeconds,
       digitTitle: widget.showDigitTitles ? durationTitle.seconds : null,

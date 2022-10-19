@@ -13,6 +13,8 @@ class TextAnimation extends StatefulWidget {
     this.curve = Curves.easeOut,
     this.countUp = true,
     this.digitsNumber,
+    this.hideFirstDigitZero = false,
+    this.isLastDigit = false,
     super.key,
   }) : assert(!(digitsNumber != null && digitsNumber.length == 9),
             'overwriting the digits of a number must complete a number from 0-9');
@@ -24,7 +26,7 @@ class TextAnimation extends StatefulWidget {
   final bool countUp;
   final Duration slideAnimationDuration;
   final List<String>? digitsNumber;
-  final bool fade;
+  final bool hideFirstDigitZero, isLastDigit, fade;
 
   @override
   _TextAnimationState createState() => _TextAnimationState();
@@ -116,36 +118,38 @@ class _TextAnimationState extends State<TextAnimation> with SingleTickerProvider
         return Stack(
           alignment: Alignment.center,
           children: [
-            FractionalTranslation(
-              translation: nextValueOffset,
-              child: ClipRect(
-                clipper: ClipHalfRect(
-                  isUp: true,
-                  slideDirection: widget.slideDirection,
-                  percentage: _offsetAnimationOne.value.dy,
-                ),
-                clipBehavior: clipBehavior,
-                child: Text(
-                  digit(nextValue),
-                  style: widget.textStyle,
-                ),
-              ),
-            ),
-            FractionalTranslation(
-              translation: currentValueOffset,
-              child: ClipRect(
-                clipper: ClipHalfRect(
-                  isUp: false,
-                  slideDirection: widget.slideDirection,
-                  percentage: _offsetAnimationTwo.value.dy,
-                ),
-                clipBehavior: clipBehavior,
-                child: Text(
-                  digit(currentValue),
-                  style: widget.textStyle,
+            if (!widget.hideFirstDigitZero || widget.isLastDigit || (!widget.isLastDigit && nextValue != 0))
+              FractionalTranslation(
+                translation: nextValueOffset,
+                child: ClipRect(
+                  clipper: ClipHalfRect(
+                    isUp: true,
+                    slideDirection: widget.slideDirection,
+                    percentage: _offsetAnimationOne.value.dy,
+                  ),
+                  clipBehavior: clipBehavior,
+                  child: Text(
+                    digit(nextValue),
+                    style: widget.textStyle,
+                  ),
                 ),
               ),
-            ),
+            if (!widget.hideFirstDigitZero || widget.isLastDigit || (!widget.isLastDigit && currentValue != 0))
+              FractionalTranslation(
+                translation: currentValueOffset,
+                child: ClipRect(
+                  clipper: ClipHalfRect(
+                    isUp: false,
+                    slideDirection: widget.slideDirection,
+                    percentage: _offsetAnimationTwo.value.dy,
+                  ),
+                  clipBehavior: clipBehavior,
+                  child: Text(
+                    digit(currentValue),
+                    style: widget.textStyle,
+                  ),
+                ),
+              ),
           ],
         );
       },
