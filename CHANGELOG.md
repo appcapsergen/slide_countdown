@@ -1,4 +1,10 @@
-## 0.3.5
+## 0.4.1
+* Added backdrop filter option
+* Added hide first digit zero option
+* Added option to show digit title underneath the \(normal\) digit
+* Code clean-up
+
+## 0.4.0
 * Added option to show digit title underneath the separated digit
 * Added option to hide separator
 * Upgraded package versions
