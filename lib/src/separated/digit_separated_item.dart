@@ -33,11 +33,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
   Widget build(BuildContext context) {
     final withoutAnimation = slideDirection == SlideDirection.none;
 
-    final int digitAmount = firstDigit.value.toString().length + secondDigit.value.toString().length;
-    final TextStyle textStyle = this.textStyle.merge(TextStyle(
-          fontSize: (this.textStyle.fontSize ?? 15.0) / (digitAmount > 2 ? (pow(1.05, digitAmount - 2)) : 1.0),
-        ));
-
     final firstDigitWidget = withoutAnimation
         ? TextWithoutAnimation(
             value: firstDigit,

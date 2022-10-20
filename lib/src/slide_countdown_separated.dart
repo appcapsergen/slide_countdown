@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -330,13 +331,18 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       child: widget.suffixIcon ?? const SizedBox.shrink(),
     );
 
+    final int daysDigitAmount = widget.duration.inDays.toString().length;
+    final TextStyle daysTextStyle = widget.textStyle.merge(TextStyle(
+      fontSize: (widget.textStyle.fontSize ?? 15.0) / (daysDigitAmount > 2 ? (pow(1.05, daysDigitAmount - 2)) : 1.0),
+    ));
+
     final days = DigitSeparatedItem(
       height: widget.height,
       width: widget.width,
       decoration: widget.decoration,
       firstDigit: daysFirstDigitNotifier,
       secondDigit: daysSecondDigitNotifier,
-      textStyle: widget.textStyle,
+      textStyle: daysTextStyle,
       separatorStyle: widget.separatorStyle,
       digitTitleStyle: widget.digitTitleStyle,
       initValue: 0,

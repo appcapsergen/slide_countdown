@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -327,10 +328,16 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
         final showSeconds = widget.shouldShowSeconds != null ? widget.shouldShowSeconds!(duration) : defaultShowSeconds;
         final isSeparatorTitle = widget.separatorType == SeparatorType.title;
 
+        final int daysDigitAmount = widget.duration.inDays.toString().length;
+        final TextStyle daysTextStyle = widget.textStyle.merge(TextStyle(
+          fontSize:
+              (widget.textStyle.fontSize ?? 15.0) / (daysDigitAmount > 2 ? (pow(1.05, daysDigitAmount - 2)) : 1.0),
+        ));
+
         final days = DigitItem(
           firstDigit: daysFirstDigitNotifier,
           secondDigit: daysSecondDigitNotifier,
-          textStyle: widget.textStyle,
+          textStyle: daysTextStyle,
           separatorStyle: widget.separatorStyle ?? widget.textStyle,
           digitTitleStyle: widget.digitTitleStyle ?? widget.textStyle,
           slideDirection: widget.slideDirection,
