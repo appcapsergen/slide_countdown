@@ -1,3 +1,6 @@
+## 0.4.2
+* Added text overflow helper
+
 ## 0.4.1
 * Added backdrop filter option
 * Added hide first digit zero option
