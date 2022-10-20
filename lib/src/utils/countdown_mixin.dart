@@ -21,20 +21,16 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     bool? updateMinutesNotifier,
     bool? updateSecondsNotifier,
   }) {
-    if (updateDaysNotifier != null &&
-        updateDaysNotifier != _updateDaysNotifier) {
+    if (updateDaysNotifier != null && updateDaysNotifier != _updateDaysNotifier) {
       _updateDaysNotifier = updateDaysNotifier;
     }
-    if (updateHoursNotifier != null &&
-        updateHoursNotifier != _updateHoursNotifier) {
+    if (updateHoursNotifier != null && updateHoursNotifier != _updateHoursNotifier) {
       _updateHoursNotifier = updateHoursNotifier;
     }
-    if (updateMinutesNotifier != null &&
-        updateMinutesNotifier != _updateMinutesNotifier) {
+    if (updateMinutesNotifier != null && updateMinutesNotifier != _updateMinutesNotifier) {
       _updateMinutesNotifier = updateMinutesNotifier;
     }
-    if (updateSecondsNotifier != null &&
-        updateSecondsNotifier != _updateSecondsNotifier) {
+    if (updateSecondsNotifier != null && updateSecondsNotifier != _updateSecondsNotifier) {
       _updateSecondsNotifier = updateSecondsNotifier;
     }
   }

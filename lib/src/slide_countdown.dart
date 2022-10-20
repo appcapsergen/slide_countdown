@@ -1,20 +1,25 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:slide_countdown/src/utils/utils.dart';
+import 'package:slide_countdown/src/utils/extensions.dart';
 import 'package:stream_duration/stream_duration.dart';
 
 import 'default/default.dart';
 import 'utils/countdown_mixin.dart';
 import 'utils/duration_title.dart';
 import 'utils/enum.dart';
-import 'utils/extensions.dart';
 import 'utils/notify_duration.dart';
+import 'utils/utils.dart';
 
 class SlideCountdown extends StatefulWidget {
   const SlideCountdown({
-    Key? key,
     required this.duration,
-    this.textStyle = const TextStyle(color: Color(0xFFFFFFFF), fontWeight: FontWeight.bold),
+    this.textStyle = const TextStyle(
+      color: Color(0xFFFFFFFF),
+      fontWeight: FontWeight.bold,
+    ),
     this.separatorStyle,
+    this.digitTitleStyle,
     this.icon,
     this.suffixIcon,
     this.separator,
@@ -23,13 +28,16 @@ class SlideCountdown extends StatefulWidget {
     this.durationTitle,
     this.separatorType = SeparatorType.symbol,
     this.slideDirection = SlideDirection.down,
-    this.padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    this.separatorPadding = const EdgeInsets.symmetric(horizontal: 3),
+    this.padding = const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+    this.separatorPadding = const EdgeInsets.symmetric(horizontal: 3.0),
+    this.digitTitlePadding = const EdgeInsets.symmetric(horizontal: 3.0),
     @Deprecated("no longer used, use `shouldShowDays` instead") this.withDays = true,
     this.showZeroValue = false,
     @Deprecated("no longer used") this.fade = false,
+    this.hideFirstDigitZero = false,
+    this.showDigitTitles = false,
     this.decoration = const BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(20)),
+      borderRadius: BorderRadius.all(Radius.circular(20.0)),
       color: Color(0xFFF23333),
     ),
     this.curve = Curves.easeOut,
@@ -38,13 +46,15 @@ class SlideCountdown extends StatefulWidget {
     this.slideAnimationDuration = const Duration(milliseconds: 300),
     this.textDirection,
     this.digitsNumber,
+    this.filter,
     this.streamDuration,
     this.onChanged,
     this.shouldShowDays,
     this.shouldShowHours,
     this.shouldShowMinutes,
     this.shouldShowSeconds,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// [Duration] is the duration of the countdown slide,
   /// if the duration has finished it will call [onDone]
@@ -59,6 +69,11 @@ class SlideCountdown extends StatefulWidget {
   /// if this is null [SlideCountdown] has a default
   /// text style which will be of all text
   final TextStyle? separatorStyle;
+
+  /// [TextStyle] is a parameter for all existing text,
+  /// if this is null [SlideCountdown] has a default
+  /// text style which will be of all text
+  final TextStyle? digitTitleStyle;
 
   /// [icon] is a parameter that can be initialized by any widget e.g [Icon],
   /// this will be in the first order, default empty widget
@@ -100,6 +115,9 @@ class SlideCountdown extends StatefulWidget {
   /// The amount of space by which to inset the [separator].
   final EdgeInsets separatorPadding;
 
+  /// The amount of space by which to inset the digit titles.
+  final EdgeInsets digitTitlePadding;
+
   /// if the remaining duration is less than one day,
   /// but you want to display the digits of the day, set the value to true.
   /// Make sure the [showZeroValue] property is also true
@@ -110,6 +128,12 @@ class SlideCountdown extends StatefulWidget {
 
   /// if you want [slideDirection] animation that is not rough set this value to true
   final bool fade;
+
+  /// if you want to hide the first digit when it's 0 (zero) set this value to true
+  final bool hideFirstDigitZero;
+
+  /// if you want the digit titles to be visible under the digits set this value to true
+  final bool showDigitTitles;
 
   /// you can change the slide animation up or down by changing the enum value in this property
   final SlideDirection slideDirection;
@@ -137,6 +161,9 @@ class SlideCountdown extends StatefulWidget {
   /// Override digits number
   /// Default 0-9
   final List<String>? digitsNumber;
+
+  /// ImageFilter for optional backdrop filter
+  final ImageFilter? filter;
 
   /// If you override [StreamDuration] package for stream a duration
   /// property [duration], [countUp], [infinityCountUp], and [onDone] in [SlideCountdown] not affected
@@ -305,16 +332,21 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           secondDigit: daysSecondDigitNotifier,
           textStyle: widget.textStyle,
           separatorStyle: widget.separatorStyle ?? widget.textStyle,
+          digitTitleStyle: widget.digitTitleStyle ?? widget.textStyle,
           slideDirection: widget.slideDirection,
           curve: widget.curve,
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
-          separator: widget.separatorType == SeparatorType.title ? durationTitle.days : separator,
-          separatorPadding: widget.separatorPadding,
           textDirection: widget.textDirection,
           fade: widget.fade,
-          digitsNumber: widget.digitsNumber,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: (showHours || showMinutes || showSeconds) || (isSeparatorTitle && showDays),
+          digitTitle: widget.showDigitTitles ? durationTitle.days : null,
+          separatorPadding: widget.separatorPadding,
+          digitTitlePadding: widget.digitTitlePadding,
+          separator: widget.separatorType == SeparatorType.title ? durationTitle.days : separator,
+          digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final hours = DigitItem(
@@ -322,16 +354,21 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           secondDigit: hoursSecondDigitNotifier,
           textStyle: widget.textStyle,
           separatorStyle: widget.separatorStyle ?? widget.textStyle,
+          digitTitleStyle: widget.digitTitleStyle ?? widget.textStyle,
           slideDirection: widget.slideDirection,
           curve: widget.curve,
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
-          separator: widget.separatorType == SeparatorType.title ? durationTitle.hours : separator,
-          separatorPadding: widget.separatorPadding,
           textDirection: widget.textDirection,
           fade: widget.fade,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
+          showSeparator: (showMinutes || showSeconds) || (isSeparatorTitle && showHours),
+          digitTitle: widget.showDigitTitles ? durationTitle.days : null,
+          separatorPadding: widget.separatorPadding,
+          digitTitlePadding: widget.digitTitlePadding,
+          separator: widget.separatorType == SeparatorType.title ? durationTitle.hours : separator,
           digitsNumber: widget.digitsNumber,
-          showSeparator: showMinutes || showSeconds || (isSeparatorTitle && showHours),
+          filter: widget.filter,
         );
 
         final minutes = DigitItem(
@@ -339,16 +376,21 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           secondDigit: minutesSecondDigitNotifier,
           textStyle: widget.textStyle,
           separatorStyle: widget.separatorStyle ?? widget.textStyle,
+          digitTitleStyle: widget.digitTitleStyle ?? widget.textStyle,
           slideDirection: widget.slideDirection,
           curve: widget.curve,
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
-          separator: widget.separatorType == SeparatorType.title ? durationTitle.minutes : separator,
-          separatorPadding: widget.separatorPadding,
           textDirection: widget.textDirection,
           fade: widget.fade,
-          digitsNumber: widget.digitsNumber,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
+          digitTitle: widget.showDigitTitles ? durationTitle.days : null,
+          separatorPadding: widget.separatorPadding,
+          digitTitlePadding: widget.digitTitlePadding,
+          separator: widget.separatorType == SeparatorType.title ? durationTitle.minutes : separator,
+          digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final seconds = DigitItem(
@@ -356,16 +398,21 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           secondDigit: secondsSecondDigitNotifier,
           textStyle: widget.textStyle,
           separatorStyle: widget.separatorStyle ?? widget.textStyle,
+          digitTitleStyle: widget.digitTitleStyle ?? widget.textStyle,
           slideDirection: widget.slideDirection,
           curve: widget.curve,
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
-          separator: widget.separatorType == SeparatorType.title ? durationTitle.seconds : separator,
-          separatorPadding: widget.separatorPadding,
           textDirection: widget.textDirection,
           fade: widget.fade,
-          digitsNumber: widget.digitsNumber,
+          hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: isSeparatorTitle && showSeconds,
+          digitTitle: widget.showDigitTitles ? durationTitle.days : null,
+          separatorPadding: widget.separatorPadding,
+          digitTitlePadding: widget.digitTitlePadding,
+          separator: widget.separatorType == SeparatorType.title ? durationTitle.seconds : separator,
+          digitsNumber: widget.digitsNumber,
+          filter: widget.filter,
         );
 
         final daysWidget = showDays ? days : const SizedBox.shrink();
@@ -399,6 +446,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
                   ],
           ),
         );
+
         return DecoratedBox(
           decoration: widget.decoration,
           child: countdown,

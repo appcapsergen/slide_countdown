@@ -18,22 +18,26 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
     required super.slideAnimationDuration,
     required super.separator,
     required super.fade,
+    required super.hideFirstDigitZero,
     super.showSeparator = true,
     super.digitTitle,
     super.separatorPadding,
     super.digitTitlePadding,
     super.textDirection,
     super.digitsNumber,
+    super.filter,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final withOutAnimation = slideDirection == SlideDirection.none;
-    final firstDigitWidget = withOutAnimation
+    final withoutAnimation = slideDirection == SlideDirection.none;
+
+    final firstDigitWidget = withoutAnimation
         ? TextWithoutAnimation(
             value: firstDigit,
             textStyle: textStyle,
+            hideFirstDigitZero: hideFirstDigitZero,
           )
         : TextAnimation(
             slideAnimationDuration: slideAnimationDuration,
@@ -44,12 +48,15 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
             countUp: countUp,
             fade: fade,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
           );
 
-    final secondDigitWidget = withOutAnimation
+    final secondDigitWidget = withoutAnimation
         ? TextWithoutAnimation(
             value: secondDigit,
             textStyle: textStyle,
+            hideFirstDigitZero: hideFirstDigitZero,
+            isLastDigit: true,
           )
         : TextAnimation(
             slideAnimationDuration: slideAnimationDuration,
@@ -60,6 +67,8 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
             countUp: countUp,
             fade: fade,
             digitsNumber: digitsNumber,
+            hideFirstDigitZero: hideFirstDigitZero,
+            isLastDigit: true,
           );
 
     final separatorWidget = Separator(
@@ -81,32 +90,44 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       width: width,
       decoration: decoration,
       fade: fade,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: textDirection.isRtl
-                ? [secondDigitWidget, firstDigitWidget]
-                : [
-                    firstDigitWidget,
-                    secondDigitWidget,
-                  ],
-          ),
-          if (digitTitle != null) digitTitleWidget
-        ],
+      child: _wrapBackdropFilter(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: textDirection.isRtl
+                  ? [
+                      secondDigitWidget,
+                      firstDigitWidget,
+                    ]
+                  : [
+                      firstDigitWidget,
+                      secondDigitWidget,
+                    ],
+            ),
+            if (digitTitle != null) digitTitleWidget
+          ],
+        ),
       ),
     );
 
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (showSeparator && textDirection.isRtl) separatorWidget,
+        if (textDirection.isRtl && showSeparator) separatorWidget,
         box,
-        if (showSeparator && !textDirection.isRtl) separatorWidget,
+        if (!textDirection.isRtl && showSeparator) separatorWidget,
       ],
     );
   }
+
+  Widget _wrapBackdropFilter({required Widget child}) => filter != null
+      ? BackdropFilter(
+          filter: filter!,
+          child: child,
+        )
+      : child;
 }
