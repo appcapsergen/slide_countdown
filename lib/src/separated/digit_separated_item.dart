@@ -17,7 +17,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
     required super.countUp,
     required super.slideAnimationDuration,
     required super.separator,
-    required super.fade,
     required super.hideFirstDigitZero,
     super.showSeparator = true,
     super.digitTitle,
@@ -46,7 +45,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
             slideDirection: slideDirection,
             curve: curve,
             countUp: countUp,
-            fade: fade,
             digitsNumber: digitsNumber,
             hideFirstDigitZero: hideFirstDigitZero,
           );
@@ -65,7 +63,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
             slideDirection: slideDirection,
             curve: curve,
             countUp: countUp,
-            fade: fade,
             digitsNumber: digitsNumber,
             hideFirstDigitZero: hideFirstDigitZero,
             isLastDigit: true,
@@ -89,7 +86,6 @@ class DigitSeparatedItem extends BaseDigitsSeparated {
       height: height,
       width: width,
       decoration: decoration,
-      fade: fade,
       child: _wrapBackdropFilter(
         child: Column(
           mainAxisSize: MainAxisSize.min,

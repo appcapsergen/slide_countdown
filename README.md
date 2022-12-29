@@ -73,10 +73,12 @@ SlideCountdown(
 
 ---
 
-### 🚧 Maintener 
+### 🚧 Maintainer 
 [![account avatar][]][github account] <br>
 **Sergen Peker** <br>
 
+### ❤️ Support the maintainer
+[![badge paypal][]][paypal account] [![badge linktree][]][linktree account]
 
 [cover]:https://github.com/farhanfadila1717/flutter_package/blob/master/display/slide_coutdown/slide_countdown.png
 [slidecountdown]: https://github.com/farhanfadila1717/flutter_package/blob/master/display/slide_coutdown/slidecountdown.gif
@@ -88,3 +90,8 @@ SlideCountdown(
 [web flutter]: https://flutter.dev
 [account avatar]: https://avatars.githubusercontent.com/u/94898347?v=4
 [github account]: https://github.com/appcapsergen
+[badge linktree]: https://img.shields.io/badge/Donate-farhanfadila-orange
+[linktree account]: https://linktr.ee/farhanfadila
+[badge paypal]: https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal
+[paypal account]: https://www.paypal.me/farhanfadila1717
+[stream duration]: https://pub.dev/packages/stream_duration

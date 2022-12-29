@@ -12,7 +12,6 @@ class DigitItem extends BaseDigits {
     required super.countUp,
     required super.slideAnimationDuration,
     required super.separator,
-    required super.fade,
     required super.hideFirstDigitZero,
     super.showSeparator = true,
     super.digitTitle,
@@ -42,7 +41,6 @@ class DigitItem extends BaseDigits {
             slideDirection: slideDirection,
             curve: curve,
             countUp: countUp,
-            fade: fade,
             digitsNumber: digitsNumber,
             hideFirstDigitZero: hideFirstDigitZero,
           );
@@ -62,7 +60,6 @@ class DigitItem extends BaseDigits {
             slideDirection: slideDirection,
             curve: curve,
             countUp: countUp,
-            fade: fade,
             digitsNumber: digitsNumber,
             hideFirstDigitZero: hideFirstDigitZero,
             isLastDigit: true,

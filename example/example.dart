@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/slide_countdown.dart';
-import 'package:stream_duration/stream_duration.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +41,7 @@ class ExampleSlideCountdown extends StatelessWidget {
               padding: EdgeInsets.only(top: 20, bottom: 10),
               child: Text('Default'),
             ),
-            const SlideCountdown(
+            SlideCountdown(
               duration: defaultDuration,
               padding: defaultPadding,
             ),
@@ -58,7 +57,7 @@ class ExampleSlideCountdown extends StatelessWidget {
               padding: EdgeInsets.only(top: 20, bottom: 10),
               child: Text('With Icon, Fade true, & SlideDirection.up'),
             ),
-            const SlideCountdown(
+            SlideCountdown(
               duration: defaultDuration,
               padding: defaultPadding,
               slideDirection: SlideDirection.up,
@@ -75,7 +74,7 @@ class ExampleSlideCountdown extends StatelessWidget {
               padding: EdgeInsets.only(top: 20, bottom: 10),
               child: Text('Custom BoxDecoration & SeparatorType.title'),
             ),
-            const SlideCountdown(
+            SlideCountdown(
               duration: defaultDuration,
               padding: defaultPadding,
               separatorType: SeparatorType.title,
@@ -125,16 +124,16 @@ class _ExampleControlDurationState extends State<ExampleControlDuration> {
 
   @override
   void initState() {
+    super.initState();
     _streamDuration = StreamDuration(
       const Duration(hours: 2),
     );
-    super.initState();
   }
 
   @override
   void dispose() {
-    _streamDuration.dispose();
     super.dispose();
+    _streamDuration.dispose();
   }
 
   @override
@@ -150,7 +149,6 @@ class _ExampleControlDurationState extends State<ExampleControlDuration> {
           children: [
             SlideCountdown(
               // This duration no effect if you customize stream duration
-              duration: const Duration(seconds: 10),
               streamDuration: _streamDuration,
             ),
             const SizedBox(height: 10),

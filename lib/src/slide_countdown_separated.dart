@@ -15,7 +15,7 @@ import 'utils/text_animation.dart';
 
 class SlideCountdownSeparated extends StatefulWidget {
   const SlideCountdownSeparated({
-    required this.duration,
+    this.duration,
     this.height = 30.0,
     this.width = 30.0,
     this.textStyle = const TextStyle(
@@ -41,9 +41,7 @@ class SlideCountdownSeparated extends StatefulWidget {
     this.padding = const EdgeInsets.all(5.0),
     this.separatorPadding = const EdgeInsets.symmetric(horizontal: 3.0),
     this.digitTitlePadding = const EdgeInsets.symmetric(horizontal: 3.0),
-    @Deprecated("no longer used, use `ShouldShowItems`") this.withDays = true,
     this.showZeroValue = false,
-    @Deprecated("no longer used") this.fade = false,
     this.hideFirstDigitZero = false,
     this.showSeparator = true,
     this.showDigitTitles = false,
@@ -65,11 +63,14 @@ class SlideCountdownSeparated extends StatefulWidget {
     this.shouldShowMinutes,
     this.shouldShowSeconds,
     super.key,
-  });
+  }) : assert(
+          duration != null || streamDuration != null,
+          'Either duration or streamDuration has to be provided',
+        );
 
   /// [Duration] is the duration of the countdown slide,
   /// if the duration has finished it will call [onDone]
-  final Duration duration;
+  final Duration? duration;
 
   /// height to set the size of height each [Container]
   /// [Container] will be the background of each a duration
@@ -139,16 +140,8 @@ class SlideCountdownSeparated extends StatefulWidget {
   /// The amount of space by which to inset the digit titles.
   final EdgeInsets digitTitlePadding;
 
-  /// if the remaining duration is less than one day,
-  /// but you want to display the digits of the day, set the value to true.
-  /// Make sure the [showZeroValue] property is also true
-  final bool withDays;
-
   /// if you initialize it with false, the duration which is empty will not be displayed
   final bool showZeroValue;
-
-  /// if you want [slideDirection] animation that is not rough set this value to true
-  final bool fade;
 
   /// if you want to hide the first digit when it's 0 (zero) set this value to true
   final bool hideFirstDigitZero;
@@ -239,7 +232,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
   @override
   void initState() {
     super.initState();
-    _notifyDuration = NotifyDuration(widget.duration);
+    _notifyDuration = NotifyDuration(duration);
     _disposed = false;
     _streamDurationListener();
     _updateConfigurationNotifier(widget.duration);
@@ -250,8 +243,8 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
     if (widget.countUp != oldWidget.countUp || widget.infinityCountUp != oldWidget.infinityCountUp) {
       _streamDurationListener();
     }
-    if (widget.duration != oldWidget.duration) {
-      _streamDuration.changeDuration(widget.duration);
+    if (widget.duration != oldWidget.duration && widget.duration != null) {
+      _streamDuration.change(widget.duration!);
     }
 
     if (oldWidget.shouldShowDays != widget.shouldShowDays ||
@@ -266,7 +259,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
 
   void _streamDurationListener() {
     _streamDuration = StreamDuration(
-      widget.duration,
+      duration,
       onDone: () {
         if (widget.onDone != null) {
           widget.onDone!();
@@ -309,11 +302,13 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
     );
   }
 
+  Duration get duration => widget.duration ?? widget.streamDuration!.duration;
+
   @override
   void dispose() {
+    super.dispose();
     _disposed = true;
     _streamDuration.dispose();
-    super.dispose();
   }
 
   @override
@@ -331,7 +326,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       child: widget.suffixIcon ?? const SizedBox.shrink(),
     );
 
-    final int daysDigitAmount = widget.duration.inDays.toString().length;
+    final int daysDigitAmount = duration.inDays.toString().length;
     final TextStyle daysTextStyle = widget.textStyle.merge(TextStyle(
       fontSize: (widget.textStyle.fontSize ?? 15.0) / (daysDigitAmount > 2 ? (pow(1.05, daysDigitAmount - 2)) : 1.0),
     ));
@@ -351,7 +346,6 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       curve: widget.curve,
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
-      fade: widget.fade,
       hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: (showHours || showMinutes || showSeconds) || (isSeparatorTitle && showDays),
@@ -379,7 +373,6 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       curve: widget.curve,
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
-      fade: widget.fade,
       hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: showMinutes || showSeconds || (isSeparatorTitle && showHours),
@@ -407,7 +400,6 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       curve: widget.curve,
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
-      fade: widget.fade,
       hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator,
       // showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
@@ -435,7 +427,6 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
       curve: widget.curve,
       countUp: widget.countUp,
       slideAnimationDuration: widget.slideAnimationDuration,
-      fade: widget.fade,
       hideFirstDigitZero: widget.hideFirstDigitZero,
       showSeparator: widget.showSeparator && widget.separatorType == SeparatorType.title,
       // showSeparator: isSeparatorTitle && showSeconds,
@@ -451,12 +442,9 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
     return ValueListenableBuilder(
       valueListenable: _notifyDuration,
       builder: (_, Duration duration, __) {
-        final daysWidget =
-            showWidget(duration.inDays, widget.showZeroValue) && widget.withDays ? days : const SizedBox.shrink();
+        final daysWidget = showWidget(duration.inDays, widget.showZeroValue) ? days : const SizedBox.shrink();
         final hoursWidget = showWidget(duration.inHours, widget.showZeroValue) ? hours : const SizedBox.shrink();
-
         final minutesWidget = showWidget(duration.inMinutes, widget.showZeroValue) ? minutes : const SizedBox.shrink();
-
         final secondsWidget = showWidget(duration.inSeconds, widget.showZeroValue) ? seconds : const SizedBox.shrink();
 
         return Row(

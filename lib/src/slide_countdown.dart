@@ -14,7 +14,7 @@ import 'utils/utils.dart';
 
 class SlideCountdown extends StatefulWidget {
   const SlideCountdown({
-    required this.duration,
+    this.duration,
     this.textStyle = const TextStyle(
       color: Color(0xFFFFFFFF),
       fontWeight: FontWeight.bold,
@@ -32,9 +32,7 @@ class SlideCountdown extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
     this.separatorPadding = const EdgeInsets.symmetric(horizontal: 3.0),
     this.digitTitlePadding = const EdgeInsets.symmetric(horizontal: 3.0),
-    @Deprecated("no longer used, use `shouldShowDays` instead") this.withDays = true,
     this.showZeroValue = false,
-    @Deprecated("no longer used") this.fade = false,
     this.hideFirstDigitZero = false,
     this.showDigitTitles = false,
     this.decoration = const BoxDecoration(
@@ -55,11 +53,14 @@ class SlideCountdown extends StatefulWidget {
     this.shouldShowMinutes,
     this.shouldShowSeconds,
     super.key,
-  });
+  }) : assert(
+          duration != null || streamDuration != null,
+          'Either duration or streamDuration has to be provided',
+        );
 
   /// [Duration] is the duration of the countdown slide,
   /// if the duration has finished it will call [onDone]
-  final Duration duration;
+  final Duration? duration;
 
   /// [TextStyle] is a parameter for all existing text,
   /// if this is null [SlideCountdown] has a default
@@ -119,16 +120,8 @@ class SlideCountdown extends StatefulWidget {
   /// The amount of space by which to inset the digit titles.
   final EdgeInsets digitTitlePadding;
 
-  /// if the remaining duration is less than one day,
-  /// but you want to display the digits of the day, set the value to true.
-  /// Make sure the [showZeroValue] property is also true
-  final bool withDays;
-
   /// if you initialize it with false, the duration which is empty will not be displayed
   final bool showZeroValue;
-
-  /// if you want [slideDirection] animation that is not rough set this value to true
-  final bool fade;
 
   /// if you want to hide the first digit when it's 0 (zero) set this value to true
   final bool hideFirstDigitZero;
@@ -216,7 +209,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
   @override
   void initState() {
     super.initState();
-    _notifyDuration = NotifyDuration(widget.duration);
+    _notifyDuration = NotifyDuration(duration);
     _disposed = false;
     _streamDurationListener();
     _updateConfigurationNotifier(widget.duration);
@@ -229,7 +222,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
       _streamDurationListener();
     }
     if (widget.duration != oldWidget.duration) {
-      _streamDuration.changeDuration(widget.duration);
+      _streamDuration.change(duration);
     }
 
     if (oldWidget.shouldShowDays != widget.shouldShowDays ||
@@ -245,7 +238,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
   void _streamDurationListener() {
     _streamDuration = widget.streamDuration ??
         StreamDuration(
-          widget.duration,
+          duration,
           onDone: () {
             if (widget.onDone != null) {
               widget.onDone!();
@@ -290,11 +283,13 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
     );
   }
 
+  Duration get duration => widget.duration ?? widget.streamDuration!.duration;
+
   @override
   void dispose() {
+    super.dispose();
     _disposed = true;
     _streamDuration.dispose();
-    super.dispose();
   }
 
   @override
@@ -328,7 +323,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
         final showSeconds = widget.shouldShowSeconds != null ? widget.shouldShowSeconds!(duration) : defaultShowSeconds;
         final isSeparatorTitle = widget.separatorType == SeparatorType.title;
 
-        final int daysDigitAmount = widget.duration.inDays.toString().length;
+        final int daysDigitAmount = duration.inDays.toString().length;
         final TextStyle daysTextStyle = widget.textStyle.merge(TextStyle(
           fontSize:
               (widget.textStyle.fontSize ?? 15.0) / (daysDigitAmount > 2 ? (pow(1.05, daysDigitAmount - 2)) : 1.0),
@@ -345,7 +340,6 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
-          fade: widget.fade,
           hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: (showHours || showMinutes || showSeconds) || (isSeparatorTitle && showDays),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
@@ -367,7 +361,6 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
-          fade: widget.fade,
           hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: (showMinutes || showSeconds) || (isSeparatorTitle && showHours),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
@@ -389,7 +382,6 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
-          fade: widget.fade,
           hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
@@ -411,7 +403,6 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           countUp: widget.countUp,
           slideAnimationDuration: widget.slideAnimationDuration,
           textDirection: widget.textDirection,
-          fade: widget.fade,
           hideFirstDigitZero: widget.hideFirstDigitZero,
           showSeparator: isSeparatorTitle && showSeconds,
           digitTitle: widget.showDigitTitles ? durationTitle.days : null,
