@@ -18,10 +18,10 @@ abstract class BaseDigits extends StatelessWidget {
     required this.separator,
     required this.hideFirstDigitZero,
     required this.showSeparator,
+    required this.textDirection,
     this.digitTitle,
     this.separatorPadding,
     this.digitTitlePadding,
-    this.textDirection,
     this.digitsNumber,
     this.filter,
     super.key,
@@ -39,9 +39,9 @@ abstract class BaseDigits extends StatelessWidget {
   final String separator;
   final bool hideFirstDigitZero, showSeparator;
   final String? digitTitle;
+  final TextDirection textDirection;
   final EdgeInsets? separatorPadding;
   final EdgeInsets? digitTitlePadding;
-  final TextDirection? textDirection;
   final List<String>? digitsNumber;
   final ImageFilter? filter;
 }

@@ -1,6 +1,11 @@
 part of 'default.dart';
 
+/// {@template digit_item}
+/// DigitItem is a [StatelessWidget] that represents a digit and optionally a separator.
+/// It is built using [TextAnimation] or [TextWithoutAnimation] widget and [Separator] widget.
+/// {@endtemplate}
 class DigitItem extends BaseDigits {
+  /// {@macro digit_item}
   const DigitItem({
     required super.firstDigit,
     required super.secondDigit,
@@ -12,12 +17,12 @@ class DigitItem extends BaseDigits {
     required super.countUp,
     required super.slideAnimationDuration,
     required super.separator,
+    required super.textDirection,
     required super.hideFirstDigitZero,
     super.showSeparator = true,
     super.digitTitle,
     super.separatorPadding,
     super.digitTitlePadding,
-    super.textDirection,
     super.digitsNumber,
     super.filter,
     super.key,

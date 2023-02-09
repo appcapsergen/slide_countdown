@@ -3,17 +3,29 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/src/utils/utils.dart';
-import 'package:stream_duration/stream_duration.dart';
 
+import '../slide_countdown.dart';
 import 'separated/separated.dart';
 import 'utils/countdown_mixin.dart';
-import 'utils/duration_title.dart';
-import 'utils/enum.dart';
 import 'utils/extensions.dart';
 import 'utils/notify_duration.dart';
 import 'utils/text_animation.dart';
 
+/// {@template slide_countdown_separated}
+/// The SlideCountdownSeparated is a StatefulWidget that
+/// creates a countdown timer that slides up or down to display
+/// the remaining time and each duration will be separated.
+///
+/// Example usage:
+///
+/// ```dart
+/// SlideCountdownSeparated(
+///   duration: const Duration(days: 2),
+/// );
+/// ```
+/// {@endtemplate}
 class SlideCountdownSeparated extends StatefulWidget {
+  /// {@macro slide_countdown_separated}
   const SlideCountdownSeparated({
     this.duration,
     this.height = 30.0,
@@ -53,7 +65,7 @@ class SlideCountdownSeparated extends StatefulWidget {
     this.countUp = false,
     this.infinityCountUp = false,
     this.slideAnimationDuration = const Duration(milliseconds: 300),
-    this.textDirection,
+    this.textDirection = TextDirection.rtl,
     this.digitsNumber,
     this.filter,
     this.streamDuration,
@@ -117,10 +129,7 @@ class SlideCountdownSeparated extends StatefulWidget {
   /// function [onDone] will be called when countdown is complete
   final VoidCallback? onDone;
 
-  /// if you want to change the separator type, change this value to
-  /// [SeparatorType.title] or [SeparatorType.symbol].
-  /// [SeparatorType.title] will display title between duration,
-  /// e.g minutes or you can change to another language, by changing the value in [DurationTitle]
+  /// {$macro separator_type}
   final SeparatorType separatorType;
 
   /// change [Duration Title] if you want to change the default language,
@@ -152,7 +161,7 @@ class SlideCountdownSeparated extends StatefulWidget {
   /// if you want the digit titles to be visible under the digits set this value to true
   final bool showDigitTitles;
 
-  /// you can change the slide animation up or down by changing the enum value in this property
+  /// {@macro slide_direction}
   final SlideDirection slideDirection;
 
   /// to customize curve in [TextAnimation] you can change the default value
@@ -173,11 +182,10 @@ class SlideCountdownSeparated extends StatefulWidget {
   /// Text direction for change row positions of each item
   /// ltr => [01] : [02] : [03]
   /// rtl => [03] : [02] : [01]
-  final TextDirection? textDirection;
+  final TextDirection textDirection;
 
-  /// Override digits number
-  /// Default 0-9
-  final List<String>? digitsNumber;
+  /// {@macro override_digits}
+  final OverrideDigits? digitsNumber;
 
   /// ImageFilter for optional backdrop filter
   final ImageFilter? filter;
@@ -291,6 +299,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
     final defaultShowMinutes = remainingDuration.inMinutes < 1 && !widget.showZeroValue ? false : true;
     final defaultShowSeconds = remainingDuration.inSeconds < 1 && !widget.showZeroValue ? false : true;
 
+    /// cal func from CountdownMixin
     updateConfigurationNotifier(
       updateDaysNotifier: widget.shouldShowDays != null ? widget.shouldShowDays!(remainingDuration) : defaultShowDays,
       updateHoursNotifier:

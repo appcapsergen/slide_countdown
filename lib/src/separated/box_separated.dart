@@ -1,18 +1,32 @@
 part of 'separated.dart';
 
+/// {@template box_separated}
+/// A custom widget that displays a container with a
+/// specified height, width, decoration and child.
+/// The `child` will be displayed in the center of
+/// the container with a `Clip.hardEdge` behavior.
+/// {@endtemplate}
 class BoxSeparated extends StatelessWidget {
+  /// {$macro box_separated}
   const BoxSeparated({
     required this.height,
     required this.width,
-    required this.child,
     required this.decoration,
+    required this.child,
     super.key,
   });
 
+  /// The height of the container.
   final double height;
+
+  /// The width of the container.
   final double width;
-  final Widget child;
+
+  /// The decoration of the container.
   final Decoration decoration;
+
+  /// The widget to be displayed in the center of the container.
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

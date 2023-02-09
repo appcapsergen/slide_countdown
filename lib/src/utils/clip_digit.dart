@@ -7,7 +7,7 @@ class ClipHalfRect extends CustomClipper<Rect> {
   final bool isUp;
   final SlideDirection slideDirection;
 
-  ClipHalfRect({
+  const ClipHalfRect({
     required this.percentage,
     required this.isUp,
     required this.slideDirection,
@@ -38,7 +38,6 @@ class ClipHalfRect extends CustomClipper<Rect> {
   }
 
   @override
-  bool shouldReclip(CustomClipper<Rect> oldClipper) {
-    return true;
-  }
+  bool shouldReclip(ClipHalfRect oldClipper) =>
+      percentage != oldClipper.percentage || isUp != oldClipper.isUp || slideDirection != oldClipper.slideDirection;
 }

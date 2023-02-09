@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// {@template text_without_animation}
+/// This is a StatefulWidget class that displays a text without animation.
+/// {@endtemplate}
 class TextWithoutAnimation extends StatelessWidget {
+  /// {@macro text_without_animation}
   const TextWithoutAnimation({
     required this.value,
     required this.textStyle,
@@ -8,7 +12,8 @@ class TextWithoutAnimation extends StatelessWidget {
     this.hideFirstDigitZero = false,
     this.isLastDigit = false,
     super.key,
-  });
+  }) : assert(!(digitsNumber != null && digitsNumber.length == 9),
+            'overwriting the digits of a number must complete a number from 0-9');
 
   final ValueNotifier<int> value;
   final TextStyle textStyle;

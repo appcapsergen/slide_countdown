@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'clip_digit.dart';
 import 'enum.dart';
+import 'utils.dart';
 
+/// {@template text_animation}
+/// A [StatefulWidget] that animates the text of an integer `value`
+/// when the `value` changes.
+/// {@endtemplate}
 class TextAnimation extends StatefulWidget {
-  TextAnimation({
+  /// {@macro text_animation}
+  const TextAnimation({
     required this.value,
     required this.textStyle,
     required this.slideDirection,
@@ -18,14 +24,32 @@ class TextAnimation extends StatefulWidget {
   }) : assert(!(digitsNumber != null && digitsNumber.length == 9),
             'overwriting the digits of a number must complete a number from 0-9');
 
+  /// value A [ValueNotifier] that holds the integer value to be displayed.
   final ValueNotifier<int> value;
+
+  /// The text style to be used for the text.
   final TextStyle textStyle;
+
+  /// The direction in which the text should slide during the animation.
   final SlideDirection slideDirection;
+
+  /// The duration of the slide animation.
   final Curve curve;
+
+  /// Indicates whether the text should count up or down.
   final bool countUp;
+
+  /// The duration of the slide animation.
   final Duration slideAnimationDuration;
-  final List<String>? digitsNumber;
-  final bool hideFirstDigitZero, isLastDigit;
+
+  /// {@macro override_digits}
+  final OverrideDigits? digitsNumber;
+
+  /// Whether the first digit should be hidden. (For example when there's 7 hours, whether it should show "7" or "07")
+  final bool hideFirstDigitZero;
+
+  /// Whether this digit is the last.
+  final bool isLastDigit;
 
   @override
   _TextAnimationState createState() => _TextAnimationState();
