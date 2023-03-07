@@ -65,7 +65,7 @@ class SlideCountdownSeparated extends StatefulWidget {
     this.countUp = false,
     this.infinityCountUp = false,
     this.slideAnimationDuration = const Duration(milliseconds: 300),
-    this.textDirection = TextDirection.rtl,
+    this.textDirection = TextDirection.ltr,
     this.digitsNumber,
     this.filter,
     this.streamDuration,
