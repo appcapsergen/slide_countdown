@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// {@template should_show_items}
 /// ShouldShowItems is a type alias for a function that takes a `Duration` as an argument
 /// and returns a `bool`.
@@ -12,3 +14,43 @@ typedef ShouldShowItems = bool Function(Duration);
 /// with arabic number you can use this.
 /// {@endtemplate}
 typedef OverrideDigits = List<String>;
+
+const kDefaultAnimationDuration = const Duration(milliseconds: 300);
+
+const kDefaultBoxDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+  color: Color(0xFFF23333),
+);
+
+const kDefaultSeparatedBoxDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+  color: Color(0xFFF23333),
+);
+
+const kDefaultPadding = EdgeInsets.symmetric(
+  horizontal: 10.0,
+  vertical: 5.0,
+);
+
+const kDefaultSeparatorPadding = EdgeInsets.symmetric(
+  horizontal: 3.0,
+);
+
+const kDefaultDigitTitlePadding = EdgeInsets.symmetric(
+  horizontal: 3.0,
+);
+
+const kDefaultTextStyle = const TextStyle(
+  color: Color(0xFFFFFFFF),
+  fontWeight: FontWeight.bold,
+);
+
+const kDefaultSeparatorTextStyle = const TextStyle(
+  color: Color(0xFF000000),
+  fontWeight: FontWeight.bold,
+);
+
+const kDefaultDigitTitleTextStyle = const TextStyle(
+  color: Color(0xFF000000),
+  fontWeight: FontWeight.bold,
+);

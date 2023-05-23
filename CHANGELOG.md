@@ -1,17 +1,21 @@
-## 0.6.2
+## 0.7.2
 * Added text overflow helper
 
-## 0.6.1
+## 0.7.1
 * Added backdrop filter option
 * Added hide first digit zero option
 * Added option to show digit title underneath the \(normal\) digit
 * Code clean-up
 
-## 0.6.0
+## 0.7.0
 * Added option to show digit title underneath the separated digit
 * Added option to hide separator
 * Upgraded package versions
 * Code refactor and clean-up
+
+## 0.6.0-dev.2
+* pubspec add `issue_tracker`
+* bump min flutter sdk `3.0.0`
 
 ## 0.5.0
 * bump min dart sdk to `2.17.0`
