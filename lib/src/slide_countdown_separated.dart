@@ -311,30 +311,21 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated> with 
           filter: widget.filter,
         );
 
-        final daysWidget = showWidget(duration.inDays, widget.showZeroValue) ? days : const SizedBox.shrink();
-        final hoursWidget = showWidget(duration.inHours, widget.showZeroValue) ? hours : const SizedBox.shrink();
-        final minutesWidget = showWidget(duration.inMinutes, widget.showZeroValue) ? minutes : const SizedBox.shrink();
-        final secondsWidget = showWidget(duration.inSeconds, widget.showZeroValue) ? seconds : const SizedBox.shrink();
+        final children = [
+          leadingIcon,
+          if (showDays) days,
+          if (showHours) hours,
+          if (showMinutes) minutes,
+          if (showSeconds) seconds,
+          suffixIcon,
+        ];
+        if (textDirection.isRtl) {
+          children.reversed;
+        }
 
         return Row(
           mainAxisSize: MainAxisSize.min,
-          children: textDirection.isRtl
-              ? [
-                  suffixIcon,
-                  secondsWidget,
-                  minutesWidget,
-                  hoursWidget,
-                  daysWidget,
-                  leadingIcon,
-                ]
-              : [
-                  leadingIcon,
-                  daysWidget,
-                  hoursWidget,
-                  minutesWidget,
-                  secondsWidget,
-                  suffixIcon,
-                ],
+          children: children,
         );
       },
       child: widget.replacement,

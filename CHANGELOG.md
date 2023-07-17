@@ -1,3 +1,6 @@
+## 0.7.3
+* Fixed show{Digit} not working
+
 ## 0.7.2
 * Added text overflow helper
 

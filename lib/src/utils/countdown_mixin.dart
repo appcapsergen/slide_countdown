@@ -240,11 +240,6 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     return (duration.inSeconds % 60) % 10;
   }
 
-  bool showWidget(int value, [bool force = false]) {
-    if (force) return true;
-    return value > 0;
-  }
-
   @override
   void dispose() {
     disposeDaysNotifier();
